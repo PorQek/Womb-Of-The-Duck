@@ -15,9 +15,9 @@ public class PlayerCollisionManager : MonoBehaviour
         player = GetComponent<PlayerMovement>();
     }
 
-    void OnCollisionEnter2D(Collider2D info)
+    void OnCollisionEnter2D(Collision2D info)
     {
-        if(info.tag == "Spikes")
+/*        if(info.tag == "Spikes")
         {
             switch (player.movingDir)
             {
@@ -34,6 +34,6 @@ public class PlayerCollisionManager : MonoBehaviour
                     Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), 0.6f, obstacleMask);
                     break;               
             }
-        }
+        }*/
     }
 }
