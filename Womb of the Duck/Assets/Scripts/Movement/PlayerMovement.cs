@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool movingHorizantally = false, canCheck = false;
     [SerializeField] LayerMask obstacleMask;
 
+    public AudioClip QuackSound;
+    public AudioSource audioSource;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();        
@@ -31,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 canCheck = false;
-            }            
+            }
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.left) * 10f, Color.yellow);
         }   
         else
         {
@@ -43,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 canCheck = false;
             }
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector2.up) * 10f, Color.yellow);
         }
 
         if (canCheck)
@@ -52,12 +57,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
                 movingHorizantally = true;
 
-                if (Input.GetAxisRaw("Horizontal") > 0)
+                if (Input.GetKeyDown(KeyCode.D))
                 {
+                    PlayQuack();
                     movingDir = Direction.East;
                 }
-                else
+                else if (Input.GetKeyDown(KeyCode.A))
                 {
+                    PlayQuack();
                     movingDir = Direction.West;
                 }
             }
@@ -66,12 +73,14 @@ public class PlayerMovement : MonoBehaviour
                 rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
                 movingHorizantally = false;
 
-                if (Input.GetAxisRaw("Vertical") > 0)
+                if (Input.GetKeyDown(KeyCode.W))
                 {
+                    PlayQuack();
                     movingDir = Direction.North;
                 }
-                else
+                else if (Input.GetKeyDown(KeyCode.S))
                 {
+                    PlayQuack();
                     movingDir = Direction.South;
                 }
             }
@@ -92,8 +101,13 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector2(speed * Time.fixedDeltaTime, 0);
                 break;
             case Direction.West:
-                rb.velocity = new Vector2(-speed * Time.fixedDeltaTime, 0);
+                rb.velocity = new Vector2(-speed * Time.fixedDeltaTime, 0);                
                 break;
         }
+    }
+
+    void PlayQuack()
+    {
+        audioSource.Play();
     }
 }

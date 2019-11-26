@@ -15,9 +15,9 @@ public class PlayerCollisionManager : MonoBehaviour
         player = GetComponent<PlayerMovement>();
     }
 
-    void OnCollisionEnter2D(Collider2D info)
+    void OnCollisionEnter2D(Collision2D info)
     {
-        if(info.tag == "Spikes")
+        if(info.collider.tag == "Spikes")
         {
             switch (player.movingDir)
             {
